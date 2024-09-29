@@ -3,10 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edutech.Api", "Edutech.Api\Edutech.Api.csproj", "{C2870ABB-E17E-41CC-9AAC-39385CF18A35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edutech.Ochestrator", "Edutech.Ochestrator\Edutech.Ochestrator.csproj", "{550F6028-1093-4B96-8EEE-C2193D729554}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edutech.Frontend", "Edutech.Frontend\Edutech.Frontend.csproj", "{5C891106-645A-446A-9DB0-11244BFFEEFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2870ABB-E17E-41CC-9AAC-39385CF18A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2870ABB-E17E-41CC-9AAC-39385CF18A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2870ABB-E17E-41CC-9AAC-39385CF18A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2870ABB-E17E-41CC-9AAC-39385CF18A35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550F6028-1093-4B96-8EEE-C2193D729554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550F6028-1093-4B96-8EEE-C2193D729554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550F6028-1093-4B96-8EEE-C2193D729554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550F6028-1093-4B96-8EEE-C2193D729554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C891106-645A-446A-9DB0-11244BFFEEFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C891106-645A-446A-9DB0-11244BFFEEFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C891106-645A-446A-9DB0-11244BFFEEFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C891106-645A-446A-9DB0-11244BFFEEFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
