@@ -27,3 +27,4 @@
 /home/oye/codes/theapplaza/edutech/Edutech.Frontend/obj/Debug/net8.0/Edutech.Frontend.pdb
 /home/oye/codes/theapplaza/edutech/Edutech.Frontend/obj/Debug/net8.0/Edutech.Frontend.genruntimeconfig.cache
 /home/oye/codes/theapplaza/edutech/Edutech.Frontend/obj/Debug/net8.0/ref/Edutech.Frontend.dll
+/home/oye/codes/theapplaza/edutech/Edutech.Frontend/obj/Debug/net8.0/Edutech.Frontend.sourcelink.json

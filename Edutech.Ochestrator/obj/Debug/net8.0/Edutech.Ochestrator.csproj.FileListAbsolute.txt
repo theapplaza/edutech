@@ -54,3 +54,4 @@
 /home/oye/codes/theapplaza/edutech/Edutech.Ochestrator/obj/Debug/net8.0/ref/Edutech.Ochestrator.dll
 /home/oye/codes/theapplaza/edutech/Edutech.Ochestrator/obj/Debug/net8.0/Aspire/references/Edutech_Api.ProjectMetadata.g.cs
 /home/oye/codes/theapplaza/edutech/Edutech.Ochestrator/obj/Debug/net8.0/Aspire/references/Edutech_Frontend.ProjectMetadata.g.cs
+/home/oye/codes/theapplaza/edutech/Edutech.Ochestrator/obj/Debug/net8.0/Edutech.Ochestrator.sourcelink.json
