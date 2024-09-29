@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Edutech.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e38f414b4466fd12a0d6a89432daa1f1c4a4e669")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+871df100855c3a12334e7a79d18b97ec311997a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Edutech.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Edutech.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
