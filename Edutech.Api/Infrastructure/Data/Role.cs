@@ -1,5 +1,3 @@
-using System;
-
 namespace Edutech.Api.Infrastructure.Data;
 
 public class Role
