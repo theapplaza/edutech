@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Edutech.Api.Infrastructure;
 
-public class ApplicationDbContext(IConfiguration configuration): DbContext
+public class ApplicationDbContext: DbContext
 {
-    private readonly IConfiguration _configuration = configuration;
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
@@ -61,12 +61,6 @@ public class ApplicationDbContext(IConfiguration configuration): DbContext
             .HasOne(e => e.Course)
             .WithMany(c => c.Enrollments)
             .HasForeignKey(e => e.CourseId);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // Set your connection string here
-        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
     }
 
 }
