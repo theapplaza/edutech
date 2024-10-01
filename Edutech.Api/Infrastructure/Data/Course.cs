@@ -10,8 +10,9 @@ public class Course
 
     // Foreign Key for Instructor (User)
     public int InstructorId { get; set; }
-    public User? Instructor { get; set; }
+    
+    public virtual User? Instructor { get; set; }
 
-    public ICollection<Module>? Modules { get; set; }
-    public ICollection<Enrollment>? Enrollments { get; set; }
+    public virtual ICollection<Module>? Modules { get; set; }
+    public virtual ICollection<Enrollment>? Enrollments { get; set; }
 }

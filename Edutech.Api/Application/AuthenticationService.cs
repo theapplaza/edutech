@@ -8,12 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Edutech.Api.Application;
 
-public class AuthService
+public class AuthSenticationService
 {
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
 
-    public AuthService(UserManager<User> userManager, IConfiguration configuration)
+    public AuthSenticationService(UserManager<User> userManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _configuration = configuration;
@@ -25,16 +25,13 @@ public class AuthService
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            // Add roles as claims
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
         };
 
                // Add user roles as claims
         var roles = await _userManager.GetRolesAsync(user);
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

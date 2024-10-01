@@ -8,11 +8,11 @@ namespace Edutech.Api.Presentation;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthenticationController (UserManager<User> userManager,  RoleManager<Role> roleManager, AuthService authService): ControllerBase
+public class AuthenticationController (UserManager<User> userManager,  RoleManager<Role> roleManager, AuthSenticationService authService): ControllerBase
 {
     private readonly UserManager<User> _userManager = userManager;
-    private readonly AuthService _authService = authService;
     private readonly RoleManager<Role> _roleManager = roleManager;
+    private readonly AuthSenticationService _authService = authService;
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestModel model)
@@ -39,7 +39,7 @@ public class AuthenticationController (UserManager<User> userManager,  RoleManag
         // Check if the role "Student" exists, if not, create it
         if (!await _roleManager.RoleExistsAsync("Student"))
         {
-            var roleResult = await _roleManager.CreateAsync(new Role { RoleName = "Student" });
+            var roleResult = await _roleManager.CreateAsync(new Role { Name = "Student" });
             if (!roleResult.Succeeded)
             {
                 return StatusCode(500, "Error while creating the Student role.");
@@ -49,7 +49,7 @@ public class AuthenticationController (UserManager<User> userManager,  RoleManag
         // Create a new user (Student)
         var student = new User
         {
-            Username = model.Username,
+            UserName = model.Username,
             Email = model.Email,
         };
 
