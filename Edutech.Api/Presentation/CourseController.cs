@@ -8,5 +8,10 @@ namespace Edutech.Api.Presentation
     [Authorize]
     public class CourseController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult GetCourses()
+        {
+            return Ok("Courses returned");
+        }
     }
 }
