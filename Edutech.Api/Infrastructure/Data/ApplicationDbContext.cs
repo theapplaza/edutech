@@ -1,4 +1,5 @@
 using Edutech.Api.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,20 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>(entity => { entity.ToTable(name: "Users"); });
+        modelBuilder.Entity<Role>(entity => { entity.ToTable(name: "Roles"); });
+        modelBuilder.Entity<IdentityUserClaim<Guid>>(entity => { entity.ToTable("UserClaims"); });
+        modelBuilder.Entity<IdentityUserRole<Guid>>(entity => { entity.ToTable("UserRoles"); });
+        modelBuilder.Entity<IdentityUserLogin<Guid>>(entity => { entity.ToTable("UserLogins"); });
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>(entity => { entity.ToTable("RoleClaims"); });
+        modelBuilder.Entity<IdentityUserToken<Guid>>(entity => { entity.ToTable("UserTokens"); });
+
+        // Configure relationships
+        // modelBuilder.Entity<User>()
+        //     .HasOne(u => u.Role)
+        //     .WithMany(r => r.Users)
+        //     .HasForeignKey(u => u.RoleId);
 
     }
 

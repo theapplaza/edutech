@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Edutech.Frontend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0dd1ea33c998d828e10aa0335b0b11db5381ef3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af4ab6791fcae7738184b4d46b8f48eda06ca23d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Edutech.Frontend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Edutech.Frontend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
