@@ -35,6 +35,83 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
         //     .WithMany(r => r.Users)
         //     .HasForeignKey(u => u.RoleId);
 
+        // Seed data for roles
+        var adminRole = new Role { Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN" };
+        var studentRole = new Role { Id = Guid.NewGuid(), Name = "Student", NormalizedName = "STUDENT" };
+
+        modelBuilder.Entity<Role>().HasData(
+            adminRole,
+            studentRole
+        );
+
+        // Seed data for users
+        var hasher = new PasswordHasher<User>();
+        var adminUser = new User
+        {
+            Id = Guid.NewGuid(),
+            UserName = "admin",
+            NormalizedUserName = "ADMIN",
+            Email = "admin@edutech.com",
+            NormalizedEmail = "ADMIN@EDUTECH.COM",
+            EmailConfirmed = true,
+            PasswordHash = hasher.HashPassword(null, "Admin@123")
+        };
+
+        modelBuilder.Entity<User>().HasData(adminUser);
+
+        // Assign admin role to admin user
+        modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
+            new IdentityUserRole<Guid>
+            {
+                UserId = adminUser.Id,
+                RoleId = adminRole.Id
+            }
+        );
+
+        // Seed data for student
+        var studentUser = new User
+        {
+            Id = Guid.NewGuid(),
+            UserName = "student1",
+            NormalizedUserName = "STUDENT1",
+            Email = "student1@edutech.com",
+            NormalizedEmail = "STUDENT1@EDUTECH.COM",
+            EmailConfirmed = true,
+            PasswordHash = hasher.HashPassword(null, "Student1@123")
+        };
+
+        modelBuilder.Entity<User>().HasData(studentUser);
+        modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
+            new IdentityUserRole<Guid>
+            {
+                UserId = studentUser.Id,
+                RoleId = studentRole.Id
+            }
+        );
+
+        //seed student 2
+        var studentUser2 = new User
+        {
+            Id = Guid.NewGuid(),
+            UserName = "student2",
+            NormalizedUserName = "STUDENT2",
+            Email = "student2@edutech.com",
+            NormalizedEmail = "STUDENT2@EDUTECH.COM",
+            EmailConfirmed = true,
+            PasswordHash = hasher.HashPassword(null, "Student2@123")
+        };
+
+        modelBuilder.Entity<User>().HasData(studentUser2);
+
+        modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
+            new IdentityUserRole<Guid>
+            {
+                UserId = studentUser2.Id,
+                RoleId = studentRole.Id
+            }
+        );
+
+
     }
 
 }
