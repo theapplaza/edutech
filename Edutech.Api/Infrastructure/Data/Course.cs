@@ -9,4 +9,5 @@ public class Course
     public required string Name { get; set; }
     public required string Description { get; set; }
     public ICollection<User>? Users { get; set; }
+    public ICollection<Module>? Modules { get; set; }
 }

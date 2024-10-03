@@ -8,11 +8,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Edutech.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ContentType",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContentType", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
@@ -63,6 +75,26 @@ namespace Edutech.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Modules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Modules_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,19 +227,51 @@ namespace Edutech.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Content",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ModuleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Content", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Content_ContentType_ContentTypeId",
+                        column: x => x.ContentTypeId,
+                        principalTable: "ContentType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Content_Modules_ModuleId",
+                        column: x => x.ModuleId,
+                        principalTable: "Modules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Courses",
                 columns: new[] { "Id", "Description", "Name" },
-                values: new object[] { new Guid("2bbd601b-6212-423d-a90b-2bdcc5b4ec91"), "This course is designed to introduce student to the world of product management", "Introduction to Product Management" });
+                values: new object[,]
+                {
+                    { new Guid("1acc1f47-2b83-4f66-9dbd-15436da626c4"), "This course is for students who want to learn how to grow a product", "Growth Product Management" },
+                    { new Guid("3bd3420e-3185-4166-a27d-683243479e8b"), "This course is designed to introduce student to the world of product management", "Introduction to Product Management" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("20a6fb56-c942-4e2f-80a6-fe0cb8e25065"), null, "Admin", "ADMIN" },
-                    { new Guid("30d73708-1e3d-4206-814b-eeb9d91bb02f"), null, "Instructor", "INSTRUCTOR" },
-                    { new Guid("41f68679-b0ff-4c62-8ca8-b8edb5c818c1"), null, "Student", "STUDENT" }
+                    { new Guid("001e71ff-06b2-4ddf-8291-274a3e526b59"), null, "Student", "STUDENT" },
+                    { new Guid("4e192ad0-2de8-4ba8-a055-7e9caf070051"), null, "Instructor", "INSTRUCTOR" },
+                    { new Guid("e6c6fda0-68d2-4bb2-b4a9-5fae44e2dcf9"), null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -215,11 +279,11 @@ namespace Edutech.Api.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("2d845e48-9621-4848-baf4-b7ca62a7dd27"), 0, "17796aa9-89f4-490b-b4dd-cb1358033753", "student2@edutech.com", true, false, null, "STUDENT2@EDUTECH.COM", "STUDENT2", "AQAAAAIAAYagAAAAEL0RHEfZFSzAD6D5NhfAIKUXkoUKiQ1VT2n0iIgwrkGeI7N6fhdM9q/1ITXBBwnHLg==", null, false, null, false, "student2" },
-                    { new Guid("45a327a8-828c-4c41-97c8-963c04d5dd21"), 0, "5062b1cb-8c55-4d76-9ef0-fa23acfcb5c5", "student1@edutech.com", true, false, null, "STUDENT1@EDUTECH.COM", "STUDENT1", "AQAAAAIAAYagAAAAEM9bUZHCK0gmHX3C9pw42//SaElCnT0vqgJvTZS83xvGWdqVnr3r7k5e0T2kemFNiQ==", null, false, null, false, "student1" },
-                    { new Guid("4802d84d-18a0-4a63-baac-8267b93ff215"), 0, "4e317163-0992-4134-ad02-bca874e6f119", "instructor2@edutech.com", true, false, null, "INSTRUCTOR2@EDUTECH.COM", "INSTRUCTOR2", "AQAAAAIAAYagAAAAEC/Ok529P8Iuh+//s26YQ4f8LgVw8mKQPE+qaUSBhmbHXEMvLLgSce0WTVg8ACJH7Q==", null, false, null, false, "instructor2" },
-                    { new Guid("74815533-fcf5-4654-80f3-96f3de826471"), 0, "e5c6501e-d0d7-4340-b127-9aa706b34929", "instructor1@edutech.com", true, false, null, "INSTRUCTOR1@EDUTECH.COM", "INSTRUCTOR1", "AQAAAAIAAYagAAAAENT22RBddC21O//3Dv0dTitVMxB+yR2qVt/pgQb95nDog4AwsCNXq5sb8b136FJbZQ==", null, false, null, false, "instructor1" },
-                    { new Guid("7a1f2361-dc73-432a-9842-c85cf91b88c4"), 0, "76d8476e-7e31-4148-92d8-bdf162558178", "admin@edutech.com", true, false, null, "ADMIN@EDUTECH.COM", "ADMIN", "AQAAAAIAAYagAAAAELuySz9oTEzj+aN5GoSUGz17RUHl4L8NdZS2fginHsnoRRnxCaaqN93dPYY7vNcWsg==", null, false, null, false, "admin" }
+                    { new Guid("08d99f85-40a0-4551-a646-397b9af00dd1"), 0, "aab8eaed-1ac3-4159-a272-acc74d114faf", "instructor1@edutech.com", true, false, null, "INSTRUCTOR1@EDUTECH.COM", "INSTRUCTOR1", "AQAAAAIAAYagAAAAEEE+oUSkFU88qj61FL5296w1g1m/6hHgXWPm/WYUxt/CluVqnUHa9k3d+Ob+LpsIwg==", null, false, null, false, "instructor1" },
+                    { new Guid("243a28d6-eea5-4972-8a96-3b670c25b6be"), 0, "f759e9cb-7772-4118-a17b-8d62ed7ac67d", "admin@edutech.com", true, false, null, "ADMIN@EDUTECH.COM", "ADMIN", "AQAAAAIAAYagAAAAECxTa7uIt9jugPA4dBawvEIOadWCt68TJmNf27bDWAeYxmarZAqCYtHWU5xRsy0yhg==", null, false, null, false, "admin" },
+                    { new Guid("4f504e1e-1a49-46a5-b4ca-683817ff4028"), 0, "3b7089b2-2024-4978-aa4d-8fd4fc42fcdd", "student2@edutech.com", true, false, null, "STUDENT2@EDUTECH.COM", "STUDENT2", "AQAAAAIAAYagAAAAED2K9LlZrN1mBZn8ja0bJjFfSmRdp65sNPx1C8Rlc1DCZO5W8iAsAD4apqN5Fv4FsQ==", null, false, null, false, "student2" },
+                    { new Guid("8a83461b-b70b-45c7-b833-e799d0243ae9"), 0, "7d216224-e392-440f-a4dd-cccb04da8f07", "student1@edutech.com", true, false, null, "STUDENT1@EDUTECH.COM", "STUDENT1", "AQAAAAIAAYagAAAAEP9iBZPxzoULwKJaihWeuH1amPB1q1ZxayMVGr4y7m8p0hAYxqjWHEHeMcpmPEXbkg==", null, false, null, false, "student1" },
+                    { new Guid("a3336c48-f7af-4e71-9d6f-5b2a60de67c1"), 0, "98359dd0-522d-4eca-a2d2-6f6cb5ba65c3", "instructor2@edutech.com", true, false, null, "INSTRUCTOR2@EDUTECH.COM", "INSTRUCTOR2", "AQAAAAIAAYagAAAAEGMab+GsttyFUWqWxLKjSw6xBVo4FR2KdXoo1uEgQRQ5jYa2qgsfqdQZV/LwDS9d0A==", null, false, null, false, "instructor2" }
                 });
 
             migrationBuilder.InsertData(
@@ -227,9 +291,11 @@ namespace Edutech.Api.Migrations
                 columns: new[] { "CourseId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("2bbd601b-6212-423d-a90b-2bdcc5b4ec91"), new Guid("2d845e48-9621-4848-baf4-b7ca62a7dd27") },
-                    { new Guid("2bbd601b-6212-423d-a90b-2bdcc5b4ec91"), new Guid("45a327a8-828c-4c41-97c8-963c04d5dd21") },
-                    { new Guid("2bbd601b-6212-423d-a90b-2bdcc5b4ec91"), new Guid("74815533-fcf5-4654-80f3-96f3de826471") }
+                    { new Guid("1acc1f47-2b83-4f66-9dbd-15436da626c4"), new Guid("8a83461b-b70b-45c7-b833-e799d0243ae9") },
+                    { new Guid("1acc1f47-2b83-4f66-9dbd-15436da626c4"), new Guid("a3336c48-f7af-4e71-9d6f-5b2a60de67c1") },
+                    { new Guid("3bd3420e-3185-4166-a27d-683243479e8b"), new Guid("08d99f85-40a0-4551-a646-397b9af00dd1") },
+                    { new Guid("3bd3420e-3185-4166-a27d-683243479e8b"), new Guid("4f504e1e-1a49-46a5-b4ca-683817ff4028") },
+                    { new Guid("3bd3420e-3185-4166-a27d-683243479e8b"), new Guid("8a83461b-b70b-45c7-b833-e799d0243ae9") }
                 });
 
             migrationBuilder.InsertData(
@@ -237,12 +303,27 @@ namespace Edutech.Api.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("41f68679-b0ff-4c62-8ca8-b8edb5c818c1"), new Guid("2d845e48-9621-4848-baf4-b7ca62a7dd27") },
-                    { new Guid("41f68679-b0ff-4c62-8ca8-b8edb5c818c1"), new Guid("45a327a8-828c-4c41-97c8-963c04d5dd21") },
-                    { new Guid("30d73708-1e3d-4206-814b-eeb9d91bb02f"), new Guid("4802d84d-18a0-4a63-baac-8267b93ff215") },
-                    { new Guid("30d73708-1e3d-4206-814b-eeb9d91bb02f"), new Guid("74815533-fcf5-4654-80f3-96f3de826471") },
-                    { new Guid("20a6fb56-c942-4e2f-80a6-fe0cb8e25065"), new Guid("7a1f2361-dc73-432a-9842-c85cf91b88c4") }
+                    { new Guid("4e192ad0-2de8-4ba8-a055-7e9caf070051"), new Guid("08d99f85-40a0-4551-a646-397b9af00dd1") },
+                    { new Guid("e6c6fda0-68d2-4bb2-b4a9-5fae44e2dcf9"), new Guid("243a28d6-eea5-4972-8a96-3b670c25b6be") },
+                    { new Guid("001e71ff-06b2-4ddf-8291-274a3e526b59"), new Guid("4f504e1e-1a49-46a5-b4ca-683817ff4028") },
+                    { new Guid("001e71ff-06b2-4ddf-8291-274a3e526b59"), new Guid("8a83461b-b70b-45c7-b833-e799d0243ae9") },
+                    { new Guid("4e192ad0-2de8-4ba8-a055-7e9caf070051"), new Guid("a3336c48-f7af-4e71-9d6f-5b2a60de67c1") }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Content_ContentTypeId",
+                table: "Content",
+                column: "ContentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Content_ModuleId",
+                table: "Content",
+                column: "ModuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Modules_CourseId",
+                table: "Modules",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -293,6 +374,9 @@ namespace Edutech.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Content");
+
+            migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
@@ -311,13 +395,19 @@ namespace Edutech.Api.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "ContentType");
+
+            migrationBuilder.DropTable(
+                name: "Modules");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
         }
     }
 }

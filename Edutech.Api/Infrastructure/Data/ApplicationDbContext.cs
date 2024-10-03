@@ -29,15 +29,19 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
         modelBuilder.Entity<IdentityRoleClaim<Guid>>(entity => { entity.ToTable("RoleClaims"); });
         modelBuilder.Entity<IdentityUserToken<Guid>>(entity => { entity.ToTable("UserTokens"); });
 
-           // Configure many-to-many relationship between User and Course
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Courses)
-                .WithMany(c => c.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "UserCourses",
-                    l => l.HasOne<Course>().WithMany().HasForeignKey("CourseId"),
-                    r => r.HasOne<User>().WithMany().HasForeignKey("UserId"));
+        // Configure many-to-many relationship between User and Course
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Courses)
+            .WithMany(c => c.Users)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserCourses",
+                l => l.HasOne<Course>().WithMany().HasForeignKey("CourseId"),
+                r => r.HasOne<User>().WithMany().HasForeignKey("UserId"));
 
+
+        modelBuilder.Entity<Module>(entity => { entity.ToTable("Modules"); });
+        modelBuilder.Entity<ContentType>(entity => { entity.ToTable("ContentTypes"); });
+        modelBuilder.Entity<Content>(entity => { entity.ToTable("Contents"); });
 
         // Seed data for roles
         var adminRole = new Role { Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN" };
@@ -185,6 +189,75 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
             new { CourseId = course2.Id, UserId = instructorUser2.Id },
             new { CourseId = course2.Id, UserId = studentUser1.Id }
         );
+
+        var module1 = new Module
+        {
+            Id = Guid.NewGuid(),
+            Name = "Product Management Basic",
+            CourseId = course1.Id
+        };
+        modelBuilder.Entity<Module>().HasData(module1);
+
+        var module2 = new Module
+        {
+            Id = Guid.NewGuid(),
+            Name = "Product Management Framework",
+            CourseId = course1.Id
+        };
+        modelBuilder.Entity<Module>().HasData(module2);
+
+        var module3 = new Module
+        {
+            Id = Guid.NewGuid(),
+            Name = "Product Management Tools",
+            CourseId = course1.Id
+        };
+        modelBuilder.Entity<Module>().HasData(module3);
+
+        var module4 = new Module
+        {
+            Id = Guid.NewGuid(),
+            Name = "Introduction to Growth Product Management",
+            CourseId = course2.Id
+        };
+        modelBuilder.Entity<Module>().HasData(module4);
+
+        var module5 = new Module
+        {
+            Id = Guid.NewGuid(),
+            Name = "Growth Product Management Framework",
+            CourseId = course2.Id
+        };
+        modelBuilder.Entity<Module>().HasData(module5);
+
+        var contentTypes = new List<ContentType>
+        {
+            new ContentType { Id = Guid.NewGuid(), Name = "Video" },
+            new ContentType { Id = Guid.NewGuid(), Name = "Text" },
+            new ContentType { Id = Guid.NewGuid(), Name = "Quiz" }
+        };
+        modelBuilder.Entity<ContentType>().HasData(contentTypes);
+
+        var content1 = new Content
+        {
+            Id = Guid.NewGuid(),
+            Title = "Introduction to Product Management",
+            ModuleId = module1.Id,
+            ContentTypeId = contentTypes.First(c => c.Name == "Video").Id,
+            Url = "https://www.youtube.com/watch?v=9Qn0v6wJwPc"
+        };
+        modelBuilder.Entity<Content>().HasData(content1);
+
+        var content2 = new Content
+        {
+            Id = Guid.NewGuid(),
+            Title = "Career prospect for Product Managers",
+            ModuleId = module1.Id,
+            ContentTypeId = contentTypes.First(c => c.Name == "Text").Id,
+            Url = "https://www.productplan.com/glossary/product-management-framework/"
+        };
+        modelBuilder.Entity<Content>().HasData(content2);
+
 
     }
 
