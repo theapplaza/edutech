@@ -22,6 +22,39 @@ namespace Edutech.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Edutech.Api.Infrastructure.Data.Course", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a46ec693-469e-4af4-afa8-e9475c49d41b"),
+                            Description = "This course is designed to introduce student to the world of product management",
+                            Name = "Introduction to Product Management"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b2c5c2a-29cc-44b7-9994-cfe87102b399"),
+                            Description = "This course is for students who want to learn how to grow a product",
+                            Name = "Growth Product Management"
+                        });
+                });
+
             modelBuilder.Entity("Edutech.Api.Infrastructure.Data.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -52,15 +85,21 @@ namespace Edutech.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7db66dab-edbd-4e80-918b-bda6ae3367b4"),
+                            Id = new Guid("d14819e3-c7c2-4fb9-a64e-a26fe3b74889"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("3570a732-4719-4b12-82c8-185d46cbcf3c"),
+                            Id = new Guid("efd40355-da50-4e3f-8b41-0eeedaaca90c"),
                             Name = "Student",
                             NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = new Guid("feee1d6d-9515-4dba-80ac-116bbfc6789a"),
+                            Name = "Instructor",
+                            NormalizedName = "INSTRUCTOR"
                         });
                 });
 
@@ -132,48 +171,78 @@ namespace Edutech.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bfe365b3-b0a5-4998-aa41-dfe0ac4d9da5"),
+                            Id = new Guid("fec6071a-a541-46ff-98d7-bef4d532276d"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7adda6bc-340a-49e0-9712-1984325822d8",
+                            ConcurrencyStamp = "0081327a-cae7-47c6-b69a-3ea75112c91d",
                             Email = "admin@edutech.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EDUTECH.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFOgfGLMKURKN0piK1wwdgfPYF5QvDbEDHXd9/r7chRdZ0XvP/YTd1dix5a0+zwTFg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI/uiXey9G8R+S7nnMamtHGkCralkvsNLRoRPOmdicmqlys2/9m8jmYDoPKIEcwrcw==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("c847e98d-99c6-40da-8785-c25bf3532632"),
+                            Id = new Guid("2f7861bd-3623-47a9-9733-cf0cb9c114d2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "23370e4b-ec99-440d-b2fd-add35032da6a",
+                            ConcurrencyStamp = "4093768c-931b-48ad-9ab4-aa85b18ec80e",
                             Email = "student1@edutech.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT1@EDUTECH.COM",
                             NormalizedUserName = "STUDENT1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN2mTgpiku4VLSEmhcMjkTrDoeBKADzd45Dc9+Ug1mykhoRBHo+Qj60dA4089XQGCQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL6lDcX9ferAYW6Fd3iOwGHEW5FPL3mnkK4CIcPCd4sayxU8aBRmmgrAEbItpBWZhg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "student1"
                         },
                         new
                         {
-                            Id = new Guid("2e610b32-d18d-4213-84dc-e06579375d50"),
+                            Id = new Guid("f21bbc1e-afc5-4da3-b07c-f6b939af1bb1"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37745013-561a-44ff-8024-468f91c3458f",
+                            ConcurrencyStamp = "89565d20-9746-47a2-a4f9-42dd1a92bf49",
                             Email = "student2@edutech.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT2@EDUTECH.COM",
                             NormalizedUserName = "STUDENT2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB6KgyB19MSS7dAsFonhWj5SZHt59PcvkYfEzOMUCMi1uhrWZHBBgS/bJIdIsZk1iQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM1OSs72SB1Sib2XT1MK4F2NtlWTe47/XKfJv2ic4dq5BjpN+REnzc59SqAcSx4Rmg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "student2"
+                        },
+                        new
+                        {
+                            Id = new Guid("0901fdbc-e9d9-4fb7-b85d-a0c2e7bd5d15"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "de824cc2-70ac-43a4-8d53-eb405d850c81",
+                            Email = "instructor1@edutech.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "INSTRUCTOR1@EDUTECH.COM",
+                            NormalizedUserName = "INSTRUCTOR1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBrm2y2DWT1LdCr/ISFTscY2viGFb7A0jIS9vU0cA1h7oc2aJHnCbkB5Lb6vmTQ/LA==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "instructor1"
+                        },
+                        new
+                        {
+                            Id = new Guid("370f042e-9928-4faf-b88a-2c625281fcae"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1163f493-16b6-4825-928c-3dfb742f4f24",
+                            Email = "instructor2@edutech.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "INSTRUCTOR2@EDUTECH.COM",
+                            NormalizedUserName = "INSTRUCTOR2",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAXRfBrZ+KbmscT47J+wSLHR59DZZBMZjkA7kbgNtsVexin9h7sM82L5efL3FJUlCQ==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "instructor2"
                         });
                 });
 
@@ -263,18 +332,28 @@ namespace Edutech.Api.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("bfe365b3-b0a5-4998-aa41-dfe0ac4d9da5"),
-                            RoleId = new Guid("7db66dab-edbd-4e80-918b-bda6ae3367b4")
+                            UserId = new Guid("fec6071a-a541-46ff-98d7-bef4d532276d"),
+                            RoleId = new Guid("d14819e3-c7c2-4fb9-a64e-a26fe3b74889")
                         },
                         new
                         {
-                            UserId = new Guid("c847e98d-99c6-40da-8785-c25bf3532632"),
-                            RoleId = new Guid("3570a732-4719-4b12-82c8-185d46cbcf3c")
+                            UserId = new Guid("2f7861bd-3623-47a9-9733-cf0cb9c114d2"),
+                            RoleId = new Guid("efd40355-da50-4e3f-8b41-0eeedaaca90c")
                         },
                         new
                         {
-                            UserId = new Guid("2e610b32-d18d-4213-84dc-e06579375d50"),
-                            RoleId = new Guid("3570a732-4719-4b12-82c8-185d46cbcf3c")
+                            UserId = new Guid("f21bbc1e-afc5-4da3-b07c-f6b939af1bb1"),
+                            RoleId = new Guid("efd40355-da50-4e3f-8b41-0eeedaaca90c")
+                        },
+                        new
+                        {
+                            UserId = new Guid("0901fdbc-e9d9-4fb7-b85d-a0c2e7bd5d15"),
+                            RoleId = new Guid("feee1d6d-9515-4dba-80ac-116bbfc6789a")
+                        },
+                        new
+                        {
+                            UserId = new Guid("370f042e-9928-4faf-b88a-2c625281fcae"),
+                            RoleId = new Guid("feee1d6d-9515-4dba-80ac-116bbfc6789a")
                         });
                 });
 
@@ -295,6 +374,48 @@ namespace Edutech.Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("UserCourses", b =>
+                {
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CourseId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCourses");
+
+                    b.HasData(
+                        new
+                        {
+                            CourseId = new Guid("a46ec693-469e-4af4-afa8-e9475c49d41b"),
+                            UserId = new Guid("0901fdbc-e9d9-4fb7-b85d-a0c2e7bd5d15")
+                        },
+                        new
+                        {
+                            CourseId = new Guid("a46ec693-469e-4af4-afa8-e9475c49d41b"),
+                            UserId = new Guid("2f7861bd-3623-47a9-9733-cf0cb9c114d2")
+                        },
+                        new
+                        {
+                            CourseId = new Guid("a46ec693-469e-4af4-afa8-e9475c49d41b"),
+                            UserId = new Guid("f21bbc1e-afc5-4da3-b07c-f6b939af1bb1")
+                        },
+                        new
+                        {
+                            CourseId = new Guid("9b2c5c2a-29cc-44b7-9994-cfe87102b399"),
+                            UserId = new Guid("370f042e-9928-4faf-b88a-2c625281fcae")
+                        },
+                        new
+                        {
+                            CourseId = new Guid("9b2c5c2a-29cc-44b7-9994-cfe87102b399"),
+                            UserId = new Guid("2f7861bd-3623-47a9-9733-cf0cb9c114d2")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -341,6 +462,21 @@ namespace Edutech.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
+                    b.HasOne("Edutech.Api.Infrastructure.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserCourses", b =>
+                {
+                    b.HasOne("Edutech.Api.Infrastructure.Data.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Edutech.Api.Infrastructure.Data.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
