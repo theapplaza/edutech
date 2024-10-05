@@ -12,10 +12,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     // public DbSet<User> Users { get; set; }
     // public DbSet<Role> Roles { get; set; }
     public DbSet<Course> Courses { get; set; }
-    // public DbSet<Module> Modules { get; set; }
-    // public DbSet<Content> Contents { get; set; }
-    // public DbSet<ContentType> ContentTypes { get; set; }
-    // public DbSet<Enrollment> Enrollments { get; set; }
+    public DbSet<Module> Modules { get; set; }
+    public DbSet<Content> Contents { get; set; }
+    public DbSet<ContentType> ContentTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,11 +37,30 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
                 l => l.HasOne<Course>().WithMany().HasForeignKey("CourseId"),
                 r => r.HasOne<User>().WithMany().HasForeignKey("UserId"));
 
-
         modelBuilder.Entity<Module>(entity => { entity.ToTable("Modules"); });
         modelBuilder.Entity<ContentType>(entity => { entity.ToTable("ContentTypes"); });
         modelBuilder.Entity<Content>(entity => { entity.ToTable("Contents"); });
 
+        // Configure relationships with explicit foreign keys
+        modelBuilder.Entity<Course>()
+            .HasMany(c => c.Modules)
+            .WithOne(m => m.Course)
+            .HasForeignKey(m => m.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+         // Configure relationships with explicit foreign keys
+        modelBuilder.Entity<Module>()
+                .HasMany(m => m.Contents)
+                .WithOne(c => c.Module) // Explicitly specify the navigation property
+                .HasForeignKey(c => c.ModuleId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+        modelBuilder.Entity<Module>()
+                .Navigation(e => e.Contents).AutoInclude(); //eager load contents
+        modelBuilder.Entity<Content>()
+                .Navigation(e => e.ContentType).AutoInclude(); //eager load content type
+
+        #region Seed Data
         // Seed data for roles
         var adminRole = new Role { Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN" };
         var studentRole = new Role { Id = Guid.NewGuid(), Name = "Student", NormalizedName = "STUDENT" };
@@ -257,7 +275,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
             Url = "https://www.productplan.com/glossary/product-management-framework/"
         };
         modelBuilder.Entity<Content>().HasData(content2);
-
+        
+        #endregion Seed Data
 
     }
 

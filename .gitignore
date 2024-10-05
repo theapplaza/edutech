@@ -47,8 +47,6 @@ project.fragment.lock.json
 artifacts/
 Edutech.Api/obj/Debug/net8.0/Edutech.Api.AssemblyInfo.cs
 Edutech.Api/obj/Debug/net8.0/Edutech.Api.AssemblyInfoInputs.cache
-Edutech.Frontend/obj/Debug/net8.0/Edutech.Frontend.AssemblyInfo.cs
-Edutech.Frontend/obj/Debug/net8.0/Edutech.Frontend.AssemblyInfoInputs.cache
 Edutech.Ochestrator/obj/Debug/net8.0/Edutech.Ochestrator.AssemblyInfo.cs
 Edutech.Ochestrator/obj/Debug/net8.0/Edutech.Ochestrator.AssemblyInfoInputs.cache
 Edutech.Ochestrator/obj/Debug/net8.0/Edutech.Ochestrator.assets.cache

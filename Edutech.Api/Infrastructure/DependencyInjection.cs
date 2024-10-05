@@ -77,6 +77,8 @@ public static class DependencyInjection
             };
         });
 
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 
         return services;
     }

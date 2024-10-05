@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Edutech.Api\Edutech.Api.csproj" />
-    <ProjectReference Include="..\Edutech.Frontend\Edutech.Frontend.csproj" />
   </ItemGroup>
 
 </Project>

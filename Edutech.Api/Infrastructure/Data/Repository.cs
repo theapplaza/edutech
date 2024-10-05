@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Edutech.Api.Infrastructure.Data;
 
-public class Repository <T>: IRepository<T> where T : class
+public class Repository<T> : IRepository<T> where T : class
 {
     protected readonly ApplicationDbContext _context;
 
@@ -39,12 +39,31 @@ public class Repository <T>: IRepository<T> where T : class
         return _context.Set<T>().FirstOrDefaultAsync(predicate)!;
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T> GetByIdAsync(Guid id)
+    {
+        return (await _context.Set<T>().FindAsync(id))!;
+    }
+
+    public async Task<T> GetByIdAsync(Guid id, QueryOptions<T>? options = null)
     {
         var entity = await _context.Set<T>().FindAsync(id);
         if (entity == null)
         {
-            throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found.");
+            return null;
+        }
+
+        if (options == null)
+        {
+            return entity;
+        }
+
+        if (options.Includes.Count != 0)
+        {
+            foreach (var include in options.Includes)
+            {
+                var navigation = _context.Entry(entity).Navigation(include);
+                navigation.Load();
+            }
         }
         return entity;
     }
