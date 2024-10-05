@@ -49,7 +49,7 @@ public class Repository<T> : IRepository<T> where T : class
         var entity = await _context.Set<T>().FindAsync(id);
         if (entity == null)
         {
-            return null;
+            return null!;
         }
 
         if (options == null)

@@ -1,5 +1,3 @@
-using System;
-using System.Linq.Expressions;
 using Edutech.Api.Infrastructure.Data;
 
 namespace Edutech.Api.Application.Services;
